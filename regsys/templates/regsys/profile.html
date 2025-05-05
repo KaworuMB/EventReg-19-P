@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Profile</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	{% if messages %}
+	<div class="messages">
+		{% for message in messages %}
+		<p{% if message.tags %} class="message_{{ message.tags }} text-caption" {% endif %}>{{ message }}</p>
+			{% endfor %}
+	</div>
+	{% endif %}
+
+	<div class="parent">
+
+		<div class="navbar text-label">
+			{% for side, links in navbar.items %}
+			<div>
+				{% if side == "left" %}
+				{% for name, link in links.items %}
+				<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% else %}
+				{% for name, link in links.items %}
+				{% if name == "Log out" %}
+				<a class="navbar_logout" href="{% url link %}">{{ name }}</a>
+				{% else %}
+				<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+
+		<div class="blocks_group">
+			<div class="block_in_group">
+				<form action="{% url 'dispatcher' %}" method="post">
+					{% csrf_token %}
+					<p class="text-header-black col-primary-800">Login Details:</p>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="email">email address</label>
+						<input class="text-field__input text-regular" type="text" id="email" name="email" disabled
+							placeholder="{{ guest.user.username }}">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="old">old password</label>
+						<input class="text-field__input text-regular" type="password" id="old" name="old"
+							placeholder="Enter old password">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="new">new password</label>
+						<input class="text-field__input text-regular" type="password" id="new" name="new"
+							placeholder="Create new password">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="repeat">new password (again)</label>
+						<input class="text-field__input text-regular" type="password" id="repeat" name="repeat"
+							placeholder="Your new password - again">
+					</div>
+					<p class="text-caption col-base-500">The password must contain at least 8 characters, one uppercase
+						letter and
+						one digit</p>
+					<p class="text-caption col-base-500">After changing the password, you will need to log in to your profile again</p>
+					<table>
+						<tr>
+							<td><button type="submit" id="submit" name="submit" class="primary-button text-label"
+									value="edit_creds">Change Password</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
+			<div class="block_in_group">
+				<form action="{% url 'dispatcher' %}" method="post">
+					{% csrf_token %}
+					<p class="text-header-black col-primary-800">Personal Information:</p>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="surname">last name</label>
+						<input class="text-field__input text-regular" type="text" id="surname" name="surname"
+							placeholder="{{ guest.surname }}">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="firstname">first name</label>
+						<input class="text-field__input text-regular" type="text" id="firstname" name="firstname"
+							placeholder="{{ guest.firstname }}">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="patronymic">patronymic</label>
+						<input class="text-field__input text-regular" type="text" id="patronymic" name="patronymic"
+							placeholder="{{ guest.patronymic }}">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="school">place of study</label>
+						<input class="text-field__input text-regular" type="text" id="school" name="school"
+							placeholder="{{ guest.school }}">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="phone">phone</label>
+						<input class="text-field__input text-regular" type="text" id="phone" name="phone"
+							placeholder="{{ guest.phone }}">
+					</div>
+					<div class="text-field">
+						<label class="text-field__label text-caption" for="telegram">telegram</label>
+						<input class="text-field__input text-regular" type="text" id="telegram" name="telegram"
+							placeholder="{{ guest.telegram }}">
+					</div>
+					<button type="submit" id="submit" name="submit" class="primary-button text-label"
+						value="edit_info">Save</button><br><br>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+

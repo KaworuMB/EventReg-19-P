@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Help</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	{% if messages %}
+	<div class="messages text-caption">
+		{% for message in messages %}
+		<p{% if message.tags %} class="message_{{ message.tags }}" {% endif %}>{{ message }}</p>
+			{% endfor %}
+	</div>
+	{% endif %}
+
+	<div class="parent">
+
+		<div class="navbar text-label">
+			{% for side, links in navbar.items %}
+			<div>
+				{% if side == "left" %}
+				{% for name, link in links.items %}
+				<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% else %}
+				{% for name, link in links.items %}
+				<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+
+		<div class="block">
+			<p class="text-header-black col-primary-800">Help</p>
+			<p class=" text-regular col-base-800">Hi! Here we’ll try to answer all your questions about using the system. If you still have questions — write to us through the feedback form, we’ll definitely help.</p>
+			<p class="text-header-semibold col-primary-600">What is this?</p>
+			<p class="text-regular col-base-700">This is a special system for events at the SDU. Some time before an event, the organizers open registration — and the upcoming event appears in your personal account, where you can sign up. The system is used to manage each participant’s schedule, check in at events, and download attendance certificates. Register — and you’ll see everything.</p>
+			<p class="text-header-semibold col-primary-600">How to register?</p>
+			<p class="text-regular col-base-700">There is a "register" button in the top panel. On the page you land on, there will be a field to enter your email. It’s important to enter a real email — you’ll need it to access your account. We will send a generated password to your email. Go to the login page ("log in") and log in using your email and the received password. Want to change your password? You’ll be able to do that in your profile after registration.</p>
+			<p class="text-header-semibold col-primary-600">Why do I need to agree to photography?</p>
+			<p class="text-regular col-base-700">We try to take photos at all events — so you’ll have memories, and we can show others how it was. For this, we need your consent. Next to the consent checkbox, there’s a link to download the document — you can read it in more detail there.</p>
+			<p class="text-header-semibold col-primary-600">I’m already registered. How do I access my account?</p>
+			<p class="text-regular col-base-700">Look a little higher — there is a "log in" button. On the login page, you’ll need to enter the email you used during registration and your password. One more click — and you’re in your account.</p>
+			<p class="text-header-semibold col-primary-600">I forgot my password. What should I do?</p>
+			<p class="text-regular col-base-700">There is a button for this case on the login page. Click it — and you’ll get to the password recovery page. You’ll need to enter your email again, and we’ll generate a new password and send it to you. A few moments — and you can log in again.</p>
+			<p class="text-header-semibold col-primary-600">There’s no answer to my question</p>
+			<p class="text-regular col-base-700">We’ve tried to cover everything important for users who haven’t logged in yet. If your question is about registering for an event, your schedule, or your account — log in and read the help section there, you’ll likely find all the answers. If not — write to us through the feedback form, we’ll help!</p>
+			<form action="{% url 'feedback_anon' %}" method="get">
+				<button id="submit" name="submit" type="submit" value="feedback_anon"
+					class="secondary-button text-label">ask another question</button>
+			</form>
+			<br><br>
+		</div>
+	</div>
+</body>
+
+</html>

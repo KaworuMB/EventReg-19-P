@@ -1,0 +1,26 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block extrahead %}
+    <link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+{% endblock %}
+
+{% block title %}
+    Help
+{{ block.super }}
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">Django Admin Help</h1>
+{% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">Back to the System</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <p>Help for admins, amazing</p>
+{% endblock %}

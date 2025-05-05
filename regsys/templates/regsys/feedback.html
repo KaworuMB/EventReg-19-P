@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Feedback</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+
+	{% if messages %}
+	<div class="messages text-caption">
+		{% for message in messages %}
+		<p {% if message.tags %} class="message_{{ message.tags }}" {% endif %}> {{ message }} </p>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	<form action="{% url 'dispatcher' %}" enctype="multipart/form-data" method="post">
+		{% csrf_token %}
+		<input type="text" id="guest_id" name="guest_id" value="{{ guest.id }}" hidden>
+		<div class="parent">
+
+			<div class="navbar text-label">
+				{% for side, links in navbar.items %}
+				<div>
+					{% if side == "left" %}
+					{% for name, link in links.items %}
+					<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+					{% endfor %}
+					{% else %}
+					{% for name, link in links.items %}
+					{% if name == "Выйти" %}
+					<a class="navbar_logout" href="{% url link %}">Logout</a>
+					{% else %}
+					<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+					{% endif %}
+					{% endfor %}
+					{% endif %}
+				</div>
+				{% endfor %}
+			</div>
+
+			<div class="block">
+				<p class="text-header-black col-primary-800">Feedback Form</p>
+				<p class="text-caption col-base-700">Here you can share your thoughts about the registration system or report any issues. If necessary, we will send a response to the email linked to your account.</p>
+				<div class="text-field">
+					<label class="text-field__label text-caption" for="subject">Subject</label>
+					{% if subject %}
+					<input class="text-field__input text-regular" type="text" id="subject" name="subject" required
+						value="{{ subject }}">
+					{% else %}
+					<input class="text-field__input text-regular" type="text" id="subject" name="subject" required
+						placeholder="What would you like to say?">
+					{% endif %}
+				</div>
+				<div class="text-field">
+					<label class="text-field__label text-caption" for="message">Message</label><br>
+					<textarea class="text-regular" type="text" id="message" name="message" required
+						placeholder="Any questions or suggestions about the system"></textarea>
+				</div>
+				<div>
+					<label class="text-field__label text-caption" for="attachment">Attachment</label>
+					<input class="text-caption" type="file" id="attachment" name="attachment" accept="image/*,.pdf" />
+					<span class="text-caption col-base-500">You can attach an image or PDF file</span>
+					</label>
+				</div>
+				<br><button id="submit" name="submit" type="submit" value="feedback"
+					class="primary-button text-label">Send</button><br><br>
+			</div>
+		</div>
+	</form>
+</body>
+
+</html>

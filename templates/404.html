@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+    <meta charset="utf-8" />
+    <title>404</title>
+    <link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+
+    <div class="parent">
+
+        <div class="block">
+            <div style="display: flex; justify-content:left;">
+                <img src="{% static 'regsys/images/error.svg' %}" />
+                <p class="text-header-black col-primary-800">Page Not Found</p>
+            </div>
+            <br><br>
+            <p class="text-regular col-base-700">We cannot find the page at this address. Check if you entered the wrong URL.
+                If you encounter any issues or bugs, feel free to contact us - we will answer your questions or fix the bugs!</p>
+            <table>
+                <tr>
+
+                    <td>
+                        <form action="{% url 'feedback_anon' %}" method="get">
+                            <button id="submit" name="submit" type="submit" value="feedback_anon"
+                                class="primary-button text-label">Report an Error</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'landing' %}" method="get">
+                            <button id="submit" name="submit" type="submit" value="landing"
+                                class="secondary-button text-label">Back to the System</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

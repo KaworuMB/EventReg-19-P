@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+    <meta charset="utf-8" />
+    <title>500</title>
+    <link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+
+    <div class="parent">
+
+        <div class="block">
+            <div style="display: flex; justify-content:left;">
+                <img src="{% static 'regsys/images/error.svg' %}" />
+                <p class="text-header-black col-primary-800">Our Error</p>
+            </div>
+            <br><br>
+            <p class="text-regular col-base-700">It seems that an error occurred on our server. Let us know what you were trying to do, and we will try to fix it. You can also try your request again later — the issue may already be being resolved.</p>
+            <table>
+                <tr>
+
+                    <td>
+                        <form action="{% url 'feedback_anon' %}" method="get">
+                            <button id="submit" name="submit" type="submit" value="feedback_anon"
+                                class="primary-button text-label">Report an Error</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{% url 'landing' %}" method="get">
+                            <button id="submit" name="submit" type="submit" value="landing"
+                                class="secondary-button text-label">Back to the System</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Account Login</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	{% if messages %}
+	<div class="messages text-caption">
+		{% for message in messages %}
+		<p{% if message.tags %} class="message_{{ message.tags }}" {% endif %}>{{ message }}</p>
+			{% endfor %}
+	</div>
+	{% endif %}
+
+	<form action="{% url 'dispatcher' %}" method="post">
+		{% csrf_token %}
+		<div class="parent">
+
+			<div class="navbar text-label">
+				{% for side, links in navbar.items %}
+				<div>
+					{% if side == "left" %}
+					{% for name, link in links.items %}
+					<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+					{% endfor %}
+					{% else %}
+					{% for name, link in links.items %}
+					<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+					{% endfor %}
+					{% endif %}
+				</div>
+				{% endfor %}
+			</div>
+
+			<div class="block">
+				<p class="text-header-black col-primary-800">Authorization</p>
+				<p class="text-caption col-base-500">Just registered? Then check your email for the password we sent you!</p>
+				<div class="text-field">
+					<label class="text-field__label text-caption" for="email">Email Address</label>
+					<input class="text-field__input text-regular" type="text" id="email" name="email" required
+						placeholder="Enter your email address">
+				</div>
+				<div class="text-field">
+					<label class="text-field__label text-caption" for="password">Password</label>
+					<input class="text-field__input text-regular" type="password" id="password" name="password"
+						placeholder="Enter your password">
+				</div>
+				<table>
+					<tr>
+						<td><button id="submit" name="submit" type="submit" value="signin"
+								class="primary-button text-label">Login</button>
+						</td>
+	</form>
+	<td>
+		<form action="{% url 'forgot' %}" method="get">
+			<button id="submit" name="submit" type="submit" value="forgot" class="secondary-button text-label">Forgot Password</button>
+		</form>
+	</td>
+	</tr>
+	</table>
+	<br><br>
+	</div>
+	</div>
+</body>
+
+</html>

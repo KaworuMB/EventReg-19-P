@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Welcome</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	{% if messages %}
+	<div class="messages text-caption">
+		{% for message in messages %}
+		<p{% if message.tags %} class="message_{{ message.tags }}" {% endif %}>{{ message }}</p>
+			{% endfor %}
+	</div>
+	{% endif %}
+
+	<div class="parent">
+
+		<div class="navbar text-label">
+			{% for side, links in navbar.items %}
+			<div>
+				{% if side == "left" %}
+				{% for name, link in links.items %}
+				<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% else %}
+				{% for name, link in links.items %}
+				<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+
+		<div class="block">
+			<div style="display: flex; justify-content:space-between; margin-top: 36px;">
+				<p class="text-header-black col-primary-800">registration system</p>
+				<img src="{% static 'regsys/images/landing.svg' %}" />
+			</div>
+			<br>
+			<p class=" text-regular col-base-800">Hi! This is the system where you can register for SDU campus events.
+				It's simple – we'll explain everything now.</p>
+			<br><br>
+			<table>
+				<tr>
+					<th class="text-header-semibold col-primary-600">1. Create an account</th>
+					<th class="text-header-semibold col-primary-600">2. Tell us about yourself</th>
+					<th class="text-header-semibold col-primary-600">3. Choose an event</th>
+				</tr>
+				<tr>
+					<td class="text-regular col-base-700">Click “register” and log in to the system using your email</td>
+					<td class="text-regular col-base-700">You’ll need to fill out a small form – tell us your name, where you study, and how we can contact you. We use this information to communicate with event participants and to generate certificates</td>
+					<td class="text-regular col-base-700">On the registration page there’s a list of events you can join. Use the filters and choose the ones you're truly interested in!</td>
+				</tr>
+				<tr>
+					<th class="text-header-semibold col-primary-600">4. Set your schedule</th>
+					<th class="text-header-semibold col-primary-600">5. Download QR</th>
+					<th class="text-header-semibold col-primary-600">6. Download certificate</th>
+				</tr>
+				<tr>
+					<td class="text-regular col-base-700">Adjust your personal schedule – quickly choose the most interesting events before all the slots are taken!</td>
+					<td class="text-regular col-base-700">Download QR codes for events and use them to enter</td>
+					<td class="text-regular col-base-700">After each event, in the “My Schedule” section, you can download a certificate of attendance – don’t forget to scan the QR upon entry so your attendance is recorded</td>
+				</tr>
+			</table>
+			<form action="{% url 'signup' %}" method="get">
+				<button id="submit" name="submit" type="submit" value="signup"
+					class="primary-button text-label">Try it out!</button><br><br>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

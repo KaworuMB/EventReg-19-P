@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>My Schedule</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	{% if messages %}
+	<div class="messages text-caption">
+		{% for message in messages %}
+		<p{% if message.tags %} class="message_{{ message.tags }}" {% endif %}>{{ message }}</p>
+			{% endfor %}
+	</div>
+	{% endif %}
+
+	<div class="parent">
+
+		<div class="navbar text-label">
+			{% for side, links in navbar.items %}
+			<div>
+				{% if side == "left" %}
+				{% for name, link in links.items %}
+				<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% else %}
+				{% for name, link in links.items %}
+				{% if name == "Log out" %}
+				<a class="navbar_logout" href="{% url link %}">{{ name }}</a>
+				{% else %}
+				<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+
+		<div class="block">
+			<p class="text-header-black col-primary-800">your schedule</p>
+			{% if regs_future %}
+			{% for event, dates in regs_future.items %}
+			<span class="text-header-semibold col-primary-600">{{ event.event_name }}</span>
+			<table>
+				{% for date, entries in dates.items %}
+				<tr>
+					<th class="date-header text-label col-primary-400">{{ date }}</th>
+				</tr>
+				{% for entry, status in entries.items %}
+				<tr>
+					<th class="text-regular col-base-600">{{ entry.category }}</th>
+					<th class="text-regular col-base-800">{{ entry.timetable_name }}</th>
+						<form action="{% url 'qr_generate' %}" method="get">
+							<input type="text" id="guest" name="guest" value="{{ guest.id }}" hidden>
+							<input type="text" id="timetable" name="timetable" value="{{ entry.id }}" hidden>
+					<th><button type="submit" class="secondary-button text-regular" id="submit" name="submit"
+							value="qr_generate">QR</button>
+					</th>
+					</form>
+				</tr>
+				<tr>
+					<td class="text-regular col-base-500">{{ event.place }}, {{ entry.place }}</td>
+					<td class="text-regular col-base-500">{{ entry.host }}</td>
+					<td class="{{ status }} text-caption col-base-500">{{ status.label }}</td>
+				</tr>
+				{% endfor %}
+				{% endfor %}
+			</table>
+			<table>
+				<tr>
+					<form action="{% url 'download' %}" method="get">
+						<input type="text" id="event_key" name="event_key" value="{{ event.id }}" hidden>
+						<td><button type="submit" class="primary-button text-label" id="submit" name="submit"
+								value="download">Download</button>
+						</td>
+					</form>
+					<form action="{% url 'timetable' %}" method="post">
+						{% csrf_token %}
+						<input type="text" id="event_key" name="event_key" value="{{ event.id }}" hidden>
+						<td><button type="submit" class="secondary-button text-label" id="submit" name="submit"
+								value="edit">Edit</button>
+						</td>
+					</form>
+					<form action="{% url 'dispatcher' %}" method="post">
+						{% csrf_token %}
+						<input type="text" id="event_key" name="event_key" value="{{ event.id }}" hidden>
+						<td><button type="submit" class="secondary-button text-label" id="submit" name="submit"
+								value="delete">Delete</button>
+						</td>
+					</form>
+				</tr>
+			</table>
+
+			{% endfor %}
+			{% else %}
+			<p class="text-regular col-base-600">Nothing here yet. Maybe you just registered? On the "events" page in the top panel, you’ll find a list of upcoming events you can sign up for. Don’t forget to fill out your profile – we use that info to issue your attendance certificates.</p>
+			{% endif %}
+
+			<br><br>
+
+			{% if regs_past %}
+			{% for event, dates in regs_past.items %}
+			<p class="text-header-black col-primary-800">Past events</p>
+			<span class="text-header-semibold col-primary-600">{{ event.event_name }}</span>
+			<table>
+				{% for date, entries in dates.items %}
+				<tr>
+					<th class="date-header text-label col-primary-400">{{ date }}</th>
+				</tr>
+				{% for entry, status in entries.items %}
+				<tr>
+					<th class="text-regular col-base-600">{{ entry.category }}</th>
+					<th class="text-regular col-base-800">{{ entry.timetable_name }}</th>
+				</tr>
+				<tr>
+					<td class="text-regular col-base-500">{{ event.place }}, {{ entry.place }}</td>
+					<td class="text-regular col-base-500">{{ entry.host }}</td>
+					<td class="{{ status }} text-caption col-base-500">{{ status.label }}</td>
+				</tr>
+				{% endfor %}
+				{% endfor %}
+			</table>
+			<table>
+				<tr>
+					<form action="{% url 'certificate' %}" method="get">
+						<input type="text" id="event_key" name="event_key" value="{{ event.id }}" hidden>
+						<td><button type="submit" class="primary-button text-label" id="submit" name="submit"
+								value="certificate">Certificate</button></td>
+					</form>
+				</tr>
+			</table>
+			{% endfor %}
+			{% else %}
+			{% if regs_future %}
+			<p class="text-regular col-base-600">Need a certificate of attendance? It will appear here once the event is over! To have your name on the certificate, make sure to complete your profile.</p>
+			{% endif %}
+			{% endif %}
+			<br><br>
+		</div>
+	</div>
+</body>
+
+</html>

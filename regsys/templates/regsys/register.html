@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Events for Registration</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	<div class="parent">
+
+		<div class="navbar text-label">
+			{% for side, links in navbar.items %}
+			<div>
+				{% if side == "left" %}
+				{% for name, link in links.items %}
+				<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% else %}
+				{% for name, link in links.items %}
+				{% if name == "Log out" %}
+				<a class="navbar_logout" href="{% url link %}">{{ name }}</a>
+				{% else %}
+				<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+
+		<div class="filterbar">
+			{% if filterbar %}
+			<form action="{% url 'register' %}" method="get">
+				{% for type, tags in filterbar.items %}
+				<p class="{{ type.0 }} text-regular col-base-700"> {{ type.1 }}</p>
+				{% for tag, checked in tags.items %}
+				{% if checked %}
+				<input type="checkbox" class="checkbox" id="tag_{{ tag.id }}" name="tag_{{ tag.id }}" checked>
+				<label class="select-field__label text-regular" for="tag_{{ tag.id }}">{{ tag.tag_name }}</label><br>
+				{% else %}
+				<input type="checkbox" class="checkbox" id="tag_{{ tag.id }}" name="tag_{{ tag.id }}">
+				<label class="select-field__label text-regular" for="tag_{{ tag.id }}">{{ tag.tag_name }}</label><br>
+				{% endif %}
+				{% endfor %}
+				{% endfor %}
+				<br><br><button id="submit" name="submit" type="submit" value="filter"
+					class="secondary-button text-label">Filter</button>
+				<br><br><button id="submit" name="submit" type="submit" value="reset"
+					class="secondary-button text-label">Reset All Filters</button>
+			</form>
+			{% endif %}
+		</div>
+
+		<div class="block">
+			<form action="{% url 'timetable' %}" method="post">
+				{% csrf_token %}
+				<p class="text-header-black col-primary-800">Upcoming Events</p>
+				{% if events_future %}
+				{% for event, tags in events_future.items %}
+				<div class="tooltip">
+					<span class="text-header-semibold col-primary-600"> {{ event.event_name }}</span>
+					<span class="tooltiptext text-caption">{{ event.annotation }}</span>
+				</div><br>
+				{% for tag in tags %}
+				<span class="{{ tag.type }} text-caption col-base-500">{{ tag.tag_name }}&emsp;</span>
+				{% endfor %}
+				<br><span class="text-regular col-base-700">{{ event.place }}&emsp;</span>
+				{% if event.start_date != event.end_date %}
+				<span class="text-regular col-base-700">{{ event.start_date }} - {{ event.end_date }}</span>
+				{% else %}
+				<span class="text-regular col-base-700">{{ event.start_date }}</span>
+				{% endif %}
+				<br><br><button id="event_{{ event.id }}" name="event_key" type="submit" value="{{ event.id }}"
+					class="primary-button text-label">I Want to Attend</button><br><br>
+				{% endfor %}
+				{% else %}
+				<p class="text-regular col-base-600">
+					Sorry, there are currently no events available for registration.
+					<br>Try changing the filters if you've set any.
+				</p>
+				{% endif %}
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Password Recovery</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	{% if messages %}
+	<div class="messages text-caption">
+		{% for message in messages %}
+		<p{% if message.tags %} class="message_{{ message.tags }}" {% endif %}>{{ message }}</p>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	<form action="{% url 'dispatcher' %}" method="post">
+		{% csrf_token %}
+		<div class="parent">
+
+			<div class="navbar text-label">
+				{% for side, links in navbar.items %}
+				<div>
+					{% if side == "left" %}
+					{% for name, link in links.items %}
+					<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+					{% endfor %}
+					{% else %}
+					{% for name, link in links.items %}
+					<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+					{% endfor %}
+					{% endif %}
+				</div>
+				{% endfor %}
+			</div>
+
+			<div class="block">
+				<p class="text-header-black col-primary-800">Password Recovery</p>
+				<div class="text-field">
+					<label class="text-field__label text-caption" for="email">Email</label>
+					<input class="text-field__input text-regular" type="text" id="email" name="email" required
+						placeholder="Enter your email address">
+				</div>
+				<p class="text-caption col-base-500">A new password will be sent to the email address you provided. You can change it after logging into your profile.</p>
+				<button id="submit" name="submit" type="submit" value="forgot"
+					class="primary-button text-label">Send Password</button><br><br>
+			</div>
+		</div>
+	</form>
+
+</body>
+
+</html>

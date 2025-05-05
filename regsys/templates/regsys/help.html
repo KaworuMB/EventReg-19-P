@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'regsys/style.css' %}">
+	<meta charset="utf-8" />
+	<title>Help</title>
+	<link rel="icon" href="{% static 'regsys/images/favicon.png' %}" type="image/png">
+</head>
+
+<body class="background">
+	{% if messages %}
+	<div class="messages text-caption">
+		{% for message in messages %}
+		<p{% if message.tags %} class="message_{{ message.tags }}" {% endif %}>{{ message }}</p>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	<div class="parent">
+
+		<div class="navbar text-label">
+			{% for side, links in navbar.items %}
+			<div>
+				{% if side == "left" %}
+				{% for name, link in links.items %}
+				<a class="navbar_left" href="{% url link %}">{{ name }}</a>
+				{% endfor %}
+				{% else %}
+				{% for name, link in links.items %}
+				{% if name == "Выйти" %}
+				<a class="navbar_logout" href="{% url link %}">Logout</a>
+				{% else %}
+				<a class="navbar_right" href="{% url link %}">{{ name }}</a>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+
+		<div class="block">
+			<p class="text-header-black col-primary-800">Help</p>
+			<p class="text-regular col-base-800">Hi! Here we will try to answer all your questions about using the system. If you still have questions – contact us through the feedback form and we will definitely help.</p>
+			<p class="text-header-semibold col-primary-600">What is this?</p>
+			<p class="text-regular col-base-700">If you're here, you probably already know – but just in case. This is a special system for events of SDU. Some time before the event, organizers open registration – and the upcoming event appears in your account, where you can sign up. The system is used to manage each participant's schedule, check in to events, and download attendance certificates.</p>
+			<p class="text-header-semibold col-primary-600">How to register for an event?</p>
+			<p class="text-regular col-base-700">In the top panel, there's an "Events" button. On the page you land on, you’ll see a list of all events currently open for registration. If there are too many – use filters on the left side to find what suits you best. Hover over an event name to see a short description. Like it? Click “I want to go” and create your schedule by selecting only the activities you’re most interested in.</p>
+			<p class="text-header-semibold col-primary-600">I can’t fit everything I want into my schedule</p>
+			<p class="text-regular col-base-700">During some sessions, events run in parallel – you can only choose one. Some fill up fast – and registration closes. Take a look – maybe the parallel event is also interesting?</p>
+			<p class="text-header-semibold col-primary-600">I registered but can’t find my schedule</p>
+			<p class="text-regular col-base-700">In the same top panel, there’s a "My Schedule" section. You can view your registrations there and download your schedule as a PDF. You can also change your schedule if you want.</p>
+			<p class="text-header-semibold col-primary-600">I can't attend. What should I do?</p>
+			<p class="text-regular col-base-700">On the “My Schedule” page, you can cancel your registration. Please do so if you can't come – someone else might want to attend but there are no spots left.</p>
+			<p class="text-header-semibold col-primary-600">What is the QR for?</p>
+			<p class="text-regular col-base-700">We use QR codes for checking in at events. Organizers scan them and the system marks your attendance. Each event in your schedule has its own QR code. Click the “QR” button next to the event on the “My Schedule” page to download it.</p>
+			<p class="text-header-semibold col-primary-600">Where can I find the attendance certificate?</p>
+			<p class="text-regular col-base-700">At the bottom of the “My Schedule” page, you’ll find a list of events you’ve attended. Next to each is a button to download your certificate. To receive a certificate, make sure you’ve filled in your personal profile info and presented your QR code at the entrance.</p>
+			<p class="text-header-semibold col-primary-600">My name doesn’t appear on the certificate, why?</p>
+			<p class="text-regular col-base-700">To create your certificate properly, you must fill out your profile information. Make sure it’s saved – then download the certificate again. That should fix it.</p>
+			<p class="text-header-semibold col-primary-600">How can I change my password?</p>
+			<p class="text-regular col-base-700">You can change your password on your profile page. You’ll need to enter your current password and create a new one. After changing it, you’ll need to log in again.</p>
+			<p class="text-header-semibold col-primary-600">How can I change my email?</p>
+			<p class="text-regular col-base-700">Currently, all accounts are linked to an email address, and it cannot be changed. If you lose access to your email or stop using it – it's better to just create a new account before your next registration.</p>
+			<p class="text-header-semibold col-primary-600">More questions?</p>
+			<p class="text-regular col-base-700">Still have questions or problems with the system? Write to us via the feedback form — we’ll help! The link is in the top panel.</p><br><br>
+		</div>
+	</div>
+</body>
+
+</html>
