@@ -112,6 +112,7 @@ No issues or limitations reported.
 - [Customize Django Admin (RealPython)](https://realpython.com/customize-django-admin-python/)
 - [Django Secret Key Guide](https://clouddevs.com/django/secret-key/)
 - [Using .env in Django](https://dev.to/defidelity/protect-your-sensitive-data-a-guide-to-env-files-in-django-499e)
+- [CODE refrences](https://github.com/yualapshina/registration-system-coursework.git)
 
 ---
 
