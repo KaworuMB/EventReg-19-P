@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
     environment:
-      - DJANGO_SETTINGS_MODULE=LostAndFound.settings
+      - DJANGO_SETTINGS_MODULE=reg_sys_cw.settings
     env_file:
       - .env
 
